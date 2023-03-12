@@ -1,43 +1,43 @@
 "use strict";
 // ================================================================================================================
 // ================================================================================================================
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.getTextUniqWordsAmount = exports.getTextWordsAmount = exports.normalizeText = exports.capitalizeFirstLetter = void 0;
 // 1.1 Преобразование строки к нижнему регистру, но первая буква большая. “Abscd”.
-const capitalizeFirstLetter = (value) => `${value[0].toUpperCase()}${value.substring(1).toLowerCase()}`;
+var capitalizeFirstLetter = function (value) { return "".concat(value[0].toUpperCase()).concat(value.substring(1).toLowerCase()); };
 exports.capitalizeFirstLetter = capitalizeFirstLetter;
 // console.log('1.1 - capitalizeFirstLetter: ', capitalizeFirstLetter('hELLO'));
 // ================================================================================================================
 // ================================================================================================================
 // 1.2 Преобразование строки с целью правильно расстановки пробелов.
-const normalizeText = (text) => {
+var normalizeText = function (text) {
     // 1. "   :  "
-    const regExp_1 = /\s*:\s*/gi;
-    const replace_1 = ': ';
+    var regExp_1 = /\s*:\s*/gi;
+    var replace_1 = ': ';
     // 2. "   ,   "
-    const regExp_2 = /\s*,\s*/gi;
-    const replace_2 = ', ';
+    var regExp_2 = /\s*,\s*/gi;
+    var replace_2 = ', ';
     // 3. "  -   "
-    const regExp_3 = /\s*-\s*/gi;
-    const replace_3 = ' - ';
+    var regExp_3 = /\s*-\s*/gi;
+    var replace_3 = ' - ';
     // 4. "  —    "
-    const regExp_4 = /\s*—\s*/gi;
-    const replace_4 = ' — ';
+    var regExp_4 = /\s*—\s*/gi;
+    var replace_4 = ' — ';
     // 5. "  .    "
-    const regExp_5 = /\s*\.\s*/gi;
-    const replace_5 = '. ';
+    var regExp_5 = /\s*\.\s*/gi;
+    var replace_5 = '. ';
     // 6. "  ;  "
-    const regExp_6 = /\s*;\s*/gi;
-    const replace_6 = '; ';
+    var regExp_6 = /\s*;\s*/gi;
+    var replace_6 = '; ';
     // 7. " ?   "
-    const regExp_7 = /\s*?\s*/gi;
-    const replace_7 = '? ';
+    var regExp_7 = /\s*?\s*/gi;
+    var replace_7 = '? ';
     // 8. " !   "
-    const regExp_8 = /\s*!\s*/gi;
-    const replace_8 = '! ';
+    var regExp_8 = /\s*!\s*/gi;
+    var replace_8 = '! ';
     // 7. "       "
-    const regExp_9 = /\s{2,}/gi;
-    const replace_9 = ' ';
+    var regExp_9 = /\s{2,}/gi;
+    var replace_9 = ' ';
     return text
         .replace(regExp_1, replace_1)
         .replace(regExp_2, replace_2)
@@ -57,16 +57,16 @@ exports.normalizeText = normalizeText;
 // ================================================================================================================
 // ================================================================================================================
 // 1.3 Посдчитывающий кол-во слов в строке.
-const getTextWords = (text) => {
-    const regExp_1 = /\s*:\s*/gi;
-    const regExp_2 = /\s*,\s*/gi;
-    const regExp_3 = /\s*-\s*/gi;
-    const regExp_4 = /\s*—\s*/gi;
-    const regExp_5 = /\s*\.\s*/gi;
-    const regExp_6 = /\s*;\s*/gi;
-    const regExp_7 = /\s*\?\s*/gi;
-    const regExp_8 = /\s*\!\s*/gi;
-    const regExp_9 = /\s{2,}/gi;
+var getTextWords = function (text) {
+    var regExp_1 = /\s*:\s*/gi;
+    var regExp_2 = /\s*,\s*/gi;
+    var regExp_3 = /\s*-\s*/gi;
+    var regExp_4 = /\s*—\s*/gi;
+    var regExp_5 = /\s*\.\s*/gi;
+    var regExp_6 = /\s*;\s*/gi;
+    var regExp_7 = /\s*\?\s*/gi;
+    var regExp_8 = /\s*\!\s*/gi;
+    var regExp_9 = /\s{2,}/gi;
     return text
         .toLowerCase()
         .replace(regExp_1, ' ')
@@ -81,7 +81,7 @@ const getTextWords = (text) => {
         .trim()
         .split(' ');
 };
-const getTextWordsAmount = (text) => getTextWords(text).length;
+var getTextWordsAmount = function (text) { return getTextWords(text).length; };
 exports.getTextWordsAmount = getTextWordsAmount;
 //   Для теста.
 //   const TEMP_TEXT = 'Вот пример строки,в которой     используются знаки препинания.После знаков должны стоять пробелы , а перед знаками их быть не должно .    Если есть лишние подряд идущие пробелы, они должны быть устранены.';
@@ -89,14 +89,15 @@ exports.getTextWordsAmount = getTextWordsAmount;
 // ================================================================================================================
 // ================================================================================================================
 // 1.4 Подсчитывающий, уникальные слова.
-const logToColumn = (data) => {
-    Object.entries(data).forEach(([word, amount]) => {
-        console.log(`${word}: ${amount}`);
+var logToColumn = function (data) {
+    Object.entries(data).forEach(function (_a) {
+        var word = _a[0], amount = _a[1];
+        console.log("".concat(word, ": ").concat(amount));
     });
 };
-const getTextUniqWordsAmount = (text) => {
-    const textWords = getTextWords(text);
-    const wordsMap = textWords.reduce((sum, current) => {
+var getTextUniqWordsAmount = function (text) {
+    var textWords = getTextWords(text);
+    var wordsMap = textWords.reduce(function (sum, current) {
         if (!sum[current]) {
             sum[current] = 1;
         }
@@ -112,3 +113,4 @@ exports.getTextUniqWordsAmount = getTextUniqWordsAmount;
 //  Для теста.
 //   const TEMP_TEXT_2 = 'Текст, в котором слово текст несколько раз встречается и слово тоже';
 //   console.log('1.4 - getTextUniqWordsAmount: ', getTextUniqWordsAmount(TEMP_TEXT_2));
+//# sourceMappingURL=task1.js.map

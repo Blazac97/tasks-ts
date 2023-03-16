@@ -6,20 +6,21 @@ CREATE DATABASE task;
 --Создаём таблицу person
 CREATE TABLE person 
 (
-    person_id SERIAL PRIMARY KEY,
+    person_id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
     first_name varchar(20) NOT NULL,
     last_name varchar(20) NOT NULL,
     birth_year varchar(4) NOT NULL,
     bio varchar,
     country varchar(32) NOT NULL,
     profession varchar(32) NOT NULL,
-    photo_link varchar
+    photo_link varchar,
+    CONSTRAINT PK_person_person_id PRIMARY KEY (person_id)
 );
 
 --Создаём таблицу film
 CREATE TABLE film 
 (
-    film_id SERIAL PRIMARY KEY,
+    film_id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
     title varchar NOT NULL,
     film_description varchar NOT NUll,
     tagline varchar NOT NULL,
@@ -43,49 +44,54 @@ CREATE TABLE film
     age_rating varchar,
     duration time,
     banner_link varchar,
-    rating real
+    rating real,
+    CONSTRAINT PK_film_film_id PRIMARY KEY (film_id)
 );
 
 --Создаём связи многие ко многим для lead_roles.
 CREATE TABLE film_person_lead_roles
 (
-    film_person_lead_roles_id SERIAL PRIMARY KEY,
+    film_person_lead_roles_id GENERATED ALWAYS AS IDENTITY NOT NULL,
     fk_film_id integer REFERENCES film(film_id) NOT NULL,
-    fk_person_lead_roles_id integer REFERENCES person(person_id) NOT NULL
+    fk_person_lead_roles_id integer REFERENCES person(person_id) NOT NULL,
+    CONSTRAINT PK_film_person_lead_roles_id PRIMARY KEY (film_person_lead_roles_id)
 );
 
 --Создаём связи многие ко многим для second_roles.
 CREATE TABLE film_person_second_roles
 (
-    film_person_second_roles_id SERIAL PRIMARY KEY,
+    film_person_second_roles_id GENERATED ALWAYS AS IDENTITY NOT NULL,
     fk_film_id integer REFERENCES film(film_id) NOT NULL,
-    fk_person_second_roles_id integer REFERENCES person(person_id) NOT NULL
-   
-);
+    fk_person_second_roles_id integer REFERENCES person(person_id) NOT NULL,
+    CONSTRAINT PK_film_second_lead_roles_id PRIMARY KEY (film_person_second_roles_id)
+   );
 
 --Создаём таблицу жанров.
--- Используем в pk integer ,поскольку жанров не много, удобнее будет добавлять к фильмам.
+-- Используем в pk smallinteger ,поскольку жанров не много, удобнее будет добавлять к фильмам.
 CREATE TABLE genre
 (
-    genre_id smallint PRIMARY KEY,
+    genre_id smallint NOT NULL,
     title varchar(32) NOT NULL,
-    genre_description varchar(256)
+    genre_description varchar(256),
+    CONSTRAINT PK_genre_genre_id PRIMARY KEY (genre_id)
 );
 
 --Создаём связи многие ко многим для film_genre.
 CREATE TABLE film_genre
 (
-    film_genre_id SERIAL PRIMARY KEY,
+    film_genre_id GENERATED ALWAYS AS IDENTITY NOT NULL,
     fk_film_id integer REFERENCES film(film_id) NOT NULL,
-    fk_genre_id integer REFERENCES genre(genre_id) NOT NULL
+    fk_genre_id integer REFERENCES genre(genre_id) NOT NULL,
+    CONSTRAINT PK_film_genre_id PRIMARY KEY (film_genre_id)
 );
 
 --Создаём таблицу с просмотрами по странам.
 CREATE TABLE viewers
 (
-    viewers_id SERIAL PRIMARY KEY,
+    viewers_id GENERATED ALWAYS AS IDENTITY NOT NULL,
     country varchar(32) NOT NULL,
     amount integer,
     annum varchar(4) NOT NULL,
-    fk_film_id integer REFERENCES film(film_id) NOT NULL
+    fk_film_id integer REFERENCES film(film_id) NOT NULL,
+    CONSTRAINT PK_viewers_viewers_id PRIMARY KEY (viewers_id)
 );
